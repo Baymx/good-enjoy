@@ -9,12 +9,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue'),
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-    // },
+    {
+      path: '/applyTrial',
+      name: 'applyTrial',
+      component: () => import(/* webpackChunkName: "applyTrial" */ '../views/Trial/applyTrial.vue'),
+    },
   ],
 });
