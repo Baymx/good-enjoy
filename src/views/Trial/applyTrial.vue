@@ -105,23 +105,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { Button } from "vant";
-import "vant/lib/button/style";
+import { Component, Vue } from 'vue-property-decorator';
+import { Button } from 'vant';
+import 'vant/lib/button/style';
 
 @Component({
   components: {
-    [Button.name]: Button
-  }
+    [Button.name]: Button,
+  },
 })
 export default class ApplyTrial extends Vue {
   // 初始数据可以直接声明为实例的属性
-  message: string = "Hello!";
-  imageSrc: string =
-    "https://img.alicdn.com/imgextra/i2/3250799226/O1CN01gC8NvN2I1Ydst3Ie7_!!3250799226.jpg";
+  private message: string = 'Hello!';
+  private imageSrc: string =
+    'https://img.alicdn.com/imgextra/i2/3250799226/O1CN01gC8NvN2I1Ydst3Ie7_!!3250799226.jpg';
 
   // 组件方法也可以直接声明为实例的方法
-  onClick(): void {
+  public onClick(): void {
     window.alert(this.message);
   }
 }
@@ -372,7 +372,7 @@ export default class ApplyTrial extends Vue {
       font-size: 18px;
     }
     .red {
-      background: #FF5F5C;
+      background: #ff5f5c;
     }
     .gray {
       background: #babcc4;
