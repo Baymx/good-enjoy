@@ -16,5 +16,10 @@ export default new Router({
       name: 'applyTrial',
       component: () => import(/* webpackChunkName: "applyTrial" */ '../views/Trial/applyTrial.vue'),
     },
+    {
+      path: '/details',
+      name: 'details',
+      component: () => import(/* webpackChunkName: "details" */ '../views/Details/details.vue'),
+    },
   ],
 });

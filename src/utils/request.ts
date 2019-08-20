@@ -5,7 +5,10 @@ import { Toast } from 'vant';
 Vue.use(Toast);
 // 创建axios实例
 const service = axios.create({
-  timeout: 5000, // 请求超时时间
+  baseURL: 'http://mxynb.natapp1.cc',
+  timeout: 5000000000, // 请求超时时间
+  headers: { 'Content-Type': 'multipart/form-data' },
+  // withCredentials: true, // default
 });
 
 // request拦截器

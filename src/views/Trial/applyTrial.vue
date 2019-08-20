@@ -3,7 +3,7 @@
     <div class="product-image-detail">
       <div class="image-show">
         <span class="icon">&#xe6a5;</span>
-        <img class="image" :src="imageSrc" alt />
+        <img class="image" :src="imageShowSrc" alt />
       </div>
       <div class="activity">
         <img class="bg" src="../../assets/image/Trial/bg-red.png" alt />
@@ -12,9 +12,9 @@
             <img src="../../assets/image/Trial/free.png" alt />
             <div class="price">
               <p>
-                <span>0</span>享币
+                <span>{{ currency }}</span>享币
               </p>
-              <p>¥1800</p>
+              <p>¥{{ price }}</p>
             </div>
           </div>
           <div class="activity-right">
@@ -22,9 +22,9 @@
             <div class="activity-time">
               <p>距离结束仅剩</p>
               <p>
-                <span>10</span>天
-                <span>10</span>时
-                <span>10</span>分
+                <span>{{ endTime.day }}</span>天
+                <span>{{ endTime.hour }}</span>时
+                <span>{{ endTime.minute }}</span>分
               </p>
             </div>
           </div>
@@ -34,10 +34,10 @@
           <div class="number">
             <p>
               限量
-              <i>10</i>份
+              <i>{{ quantity }}</i>份
             </p>
             <p>
-              <em>10000000</em>人申请
+              <em>{{ formatPeopleNumber }}</em>人申请
             </p>
           </div>
         </div>
@@ -108,7 +108,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Button } from 'vant';
 import 'vant/lib/button/style';
-
+import { formatNumber } from '@/utils/format';
+import api from '@/api/index';
 @Component({
   components: {
     [Button.name]: Button,
@@ -117,12 +118,28 @@ import 'vant/lib/button/style';
 export default class ApplyTrial extends Vue {
   // 初始数据可以直接声明为实例的属性
   private message: string = 'Hello!';
-  private imageSrc: string =
+  private imageShowSrc: string =
     'https://img.alicdn.com/imgextra/i2/3250799226/O1CN01gC8NvN2I1Ydst3Ie7_!!3250799226.jpg';
-
+  private currency: number = 0;
+  private price: number = 1800;
+  private endTime: object = { day: 10, hour: 10, minute: 10 };
+  private quantity: number = 10;
+  private peopleNumber: number = 100000000;
+  // 计算属性
+  get formatPeopleNumber() {
+    return formatNumber(this.peopleNumber);
+  }
+  // 声明周期钩子
+  public mounted() {
+    this.get();
+  }
   // 组件方法也可以直接声明为实例的方法
   public onClick(): void {
     window.alert(this.message);
+  }
+  public async get() {
+    let data = await api.trial.getDetails({ id: 5 });
+    console.log(data);
   }
 }
 </script>
