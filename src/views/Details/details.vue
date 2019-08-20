@@ -47,7 +47,7 @@ export default class Details extends Vue {
    */
   public async getDetail(id: any) {
     const { success, code, data, message } = await api.details.getArticleDetails({ id });
-    if (success && code === '200') {
+    if (success && code === 200) {
       this.articleName = data.articleName;
       this.articleInfo = data.articleInfo;
     } else {
@@ -60,7 +60,7 @@ export default class Details extends Vue {
    */
   public async getApplyDetail(id: any) {
     const { success, code, data, message } = await api.details.getApplyDetails({ id });
-    if (success && code === '200') {
+    if (success && code === 200) {
       this.specstitle = data.title;
       this.specsValues = data.specsValues;
     } else {

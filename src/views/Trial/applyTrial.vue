@@ -30,14 +30,14 @@
           </div>
         </div>
         <div class="product-name">
-          <div class="name">源彬蜂业1218大促婚庆28g喜蜜蜂蜜创意回礼可代工OEM贴牌厂家直供</div>
+          <div class="name">{{ skuName }}</div>
           <div class="number">
             <p>
               限量
-              <i>{{ quantity }}</i>份
+              <i>{{ triaNum }}</i>份
             </p>
             <p>
-              <em>{{ formatPeopleNumber }}</em>人申请
+              <em>{{ applicationsNum }}</em>人申请
             </p>
           </div>
         </div>
@@ -47,10 +47,7 @@
     <div class="product-text-detail">
       <p>商品详情</p>
       <p>PRODUCT DETAILS</p>
-      <img
-        src="https://img.alicdn.com/imgextra/i2/1868995422/O1CN01ZCQ4121pvK1Bqv6fv_!!1868995422.jpg"
-        alt
-      />
+      <div class="img" v-html="specsValues"></div>
     </div>
     <div class="line"></div>
     <div class="product-process">
@@ -99,46 +96,90 @@
         <p class="icon">&#xe69e;</p>
         <p>分享</p>
       </div>
-      <div class="apply red">申请</div>
+      <div v-show="userStatus == 1" @click="apply" class="apply red">立即申请</div>
+      <div v-show="userStatus == 2" class="apply red">已结束</div>
+      <div v-show="userStatus == 3" class="apply red">已申请</div>
+      <div v-show="userStatus == 4" class="apply red">未选中</div>
+      <div v-show="userStatus == 5" class="apply red">恭喜获得试用</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Button } from 'vant';
-import 'vant/lib/button/style';
 import { formatNumber } from '@/utils/format';
 import api from '@/api/index';
+import index from '@/enum/index';
 @Component({
-  components: {
-    [Button.name]: Button,
-  },
+  components: {},
 })
 export default class ApplyTrial extends Vue {
   // 初始数据可以直接声明为实例的属性
   private message: string = 'Hello!';
-  private imageShowSrc: string =
-    'https://img.alicdn.com/imgextra/i2/3250799226/O1CN01gC8NvN2I1Ydst3Ie7_!!3250799226.jpg';
+  private imageShowSrc: string = '';
   private currency: number = 0;
-  private price: number = 1800;
+  private price: number = 0;
   private endTime: object = { day: 10, hour: 10, minute: 10 };
-  private quantity: number = 10;
-  private peopleNumber: number = 100000000;
+  private triaNum: number = 0;
+  private applicationsNum: number = 0;
+  private skuName: string = '';
+  private specsValues: string = '';
+  private getDateStart: object = {};
+  private getDateEnd: object = {};
+  private userStatus: number = 0;
   // 计算属性
+  // 数字千分位显示
   get formatPeopleNumber() {
-    return formatNumber(this.peopleNumber);
+    return formatNumber(this.applicationsNum);
   }
   // 声明周期钩子
   public mounted() {
     this.get();
   }
-  // 组件方法也可以直接声明为实例的方法
-  public onClick(): void {
-    window.alert(this.message);
-  }
+   /**
+     * get 获取产品详情
+     */
   public async get() {
-    const data = await api.trial.getDetails({ id: 5 });
+    // this.getDateStart = new Date();
+    const { success, code, data, message } = await api.trial.getDetails({ id: 175812049018818560 });
+    if (success && code === 200) {
+      this.imageShowSrc = index.configs.IMAGE_SRC + data.mainImg;
+      this.currency = data.triaNum;
+      this.price = data.salePrice;
+      this.skuName = data.skuName;
+      this.triaNum = data.triaNum;
+      this.applicationsNum = data.applicationsNum;
+      this.specsValues = data.specsValues;
+      this.userStatus = data.userStatus;
+      this.getSurplusTime(data.failureTime);
+    }
+  }
+  /**
+     * getSurplusTime 获取与当前时间的差值
+     * @param {[any]} time
+     */
+  public getSurplusTime(time: any) {
+    const nowTime = Date.now();
+    //获取时间差
+    const timediff = Math.round((time - nowTime) / 1000);
+    //获取还剩多少天
+    const day = Math.floor(timediff / 3600 / 24);
+    //获取还剩多少小时
+    const hour = Math.floor(timediff / 3600 % 24);
+    //获取还剩多少分钟
+    const minute = Math.floor(timediff / 60 % 60);
+    this.endTime = {
+      day,
+      hour,
+      minute
+    }
+    setTimeout(() => {
+      this.getSurplusTime(time);
+    }, 60000);
+    if (minute == 0) { return; }
+  }
+  public apply(){
+      
   }
 }
 </script>
@@ -175,6 +216,7 @@ export default class ApplyTrial extends Vue {
       width: 100%;
       overflow: hidden;
       position: relative;
+      background: #fff;
       .bg {
         display: block;
         width: 100%;
@@ -293,9 +335,8 @@ export default class ApplyTrial extends Vue {
       font-size: 10px;
       color: #969696;
     }
-    img {
-      display: block;
-      width: 100%;
+    .img {
+      margin-top: 10px;
     }
   }
   .product-process {

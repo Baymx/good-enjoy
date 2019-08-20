@@ -1,13 +1,14 @@
 import axios from 'axios';
 import Vue from 'vue';
 import { Toast } from 'vant';
+import index from '@/enum/index';
 
 Vue.use(Toast);
 // 创建axios实例
 const service = axios.create({
-  baseURL: 'http://mxynb.natapp1.cc',
-  timeout: 5000000000, // 请求超时时间
-  headers: { 'Content-Type': 'multipart/form-data' },
+  // baseURL: 'http://mxynb.natapp1.cc',
+  baseURL: index.configs.API_SRC,
+  timeout: 5000, // 请求超时时间
   // withCredentials: true, // default
 });
 
