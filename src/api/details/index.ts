@@ -1,13 +1,13 @@
 import request from '@/utils/request';
 const details: any = {};
 
-details.getArticleDetails = (params: object) => request({
+details.getArticleDetails = (params: any) => request({
   url: `/app/article/getArticleById?id=${params.id}`,
   method: 'GET',
   data: params,
 });
 
-details.getApplyDetails = (params: object) => request({
+details.getApplyDetails = (params: any) => request({
   url: `/app/report/getReportDetail?id=${params.id}`,
   method: 'GET',
   data: params,

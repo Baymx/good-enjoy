@@ -19,20 +19,20 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class Details extends Vue {
-  //品牌和种草详情的标题和内容
+  // 品牌和种草详情的标题和内容
   private articleName: string = '';
   private articleInfo: string = '';
-  //试用详情的标题和内容
+  // 试用详情的标题和内容
   private specstitle: string = '';
   private specsValues: string = '';
   private qurey: object = {};
   public mounted() {
-    let qurey = this.$route.query;
+    const qurey = this.$route.query;
     this.qurey = qurey;
     if (qurey.id && qurey.type) {
-      if (qurey.type == 'plantingGrass' || qurey.type == 'brand') {
+      if (qurey.type === 'plantingGrass' || qurey.type === 'brand') {
         this.getDetail(qurey.id);
-      } else if (qurey.type == 'apply') {
+      } else if (qurey.type === 'apply') {
         this.getApplyDetail(qurey.id);
       } else {
         this.$toast('页面访问缺少参数，稍后再试～');
@@ -46,9 +46,8 @@ export default class Details extends Vue {
    * @param {[any]}
    */
   public async getDetail(id: any) {
-    let { success, code, data, message } = await api.details.getArticleDetails({ id: id });
-    console.log(data);
-    if (success && code == '200') {
+    const { success, code, data, message } = await api.details.getArticleDetails({ id });
+    if (success && code === '200') {
       this.articleName = data.articleName;
       this.articleInfo = data.articleInfo;
     } else {
@@ -60,13 +59,11 @@ export default class Details extends Vue {
    *  @param {[any]}
    */
   public async getApplyDetail(id: any) {
-    let { success, code, data, message } = await api.details.getApplyDetails({ id: id });
-    console.log(data);
-    if (success && code == '200') {
+    const { success, code, data, message } = await api.details.getApplyDetails({ id });
+    if (success && code === '200') {
       this.specstitle = data.title;
       this.specsValues = data.specsValues;
-    }
-    else {
+    } else {
       this.$toast(message);
     }
   }

@@ -138,8 +138,7 @@ export default class ApplyTrial extends Vue {
     window.alert(this.message);
   }
   public async get() {
-    let data = await api.trial.getDetails({ id: 5 });
-    console.log(data);
+    const data = await api.trial.getDetails({ id: 5 });
   }
 }
 </script>
