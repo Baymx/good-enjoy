@@ -136,9 +136,9 @@ export default class ApplyTrial extends Vue {
   public mounted() {
     this.get();
   }
-   /**
-     * get 获取产品详情
-     */
+  /**
+   * get 获取产品详情
+   */
   public async get() {
     // this.getDateStart = new Date();
     const { success, code, data, message } = await api.trial.getDetails({ id: 175812049018818560 });
@@ -155,31 +155,31 @@ export default class ApplyTrial extends Vue {
     }
   }
   /**
-     * getSurplusTime 获取与当前时间的差值
-     * @param {[any]} time
-     */
+   * getSurplusTime 获取与当前时间的差值
+   * @param {[any]} time
+   */
   public getSurplusTime(time: any) {
     const nowTime = Date.now();
-    //获取时间差
+    // 获取时间差
     const timediff = Math.round((time - nowTime) / 1000);
-    //获取还剩多少天
+    // 获取还剩多少天
     const day = Math.floor(timediff / 3600 / 24);
-    //获取还剩多少小时
+    // 获取还剩多少小时
     const hour = Math.floor(timediff / 3600 % 24);
-    //获取还剩多少分钟
+    // 获取还剩多少分钟
     const minute = Math.floor(timediff / 60 % 60);
     this.endTime = {
       day,
       hour,
-      minute
-    }
+      minute,
+    };
     setTimeout(() => {
       this.getSurplusTime(time);
     }, 60000);
-    if (minute == 0) { return; }
+    if (minute === 0) { return; }
   }
-  public apply(){
-      
+  public async apply() {
+       const { success, code, data, message } = await api.trial.getDetails({ id: 175812049018818560 });
   }
 }
 </script>
