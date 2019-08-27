@@ -16,6 +16,7 @@
             <span class="icon">&#xe69f;</span>
           </label>
           <van-field v-model="password" type="password" placeholder="请输入密码" />
+          <span @click="codeClick">{{ codeClickFlag ? codeText : '123' }}</span>
         </div>
         <div class="button-box">
           <div @click="login" class="button">登录</div>
@@ -24,7 +25,7 @@
     </div>
     <div class="tool">
       <span @click="register">立即注册</span>
-      <span  @click="massageLogin">短信登录</span>
+      <span @click="massageLogin">短信登录</span>
     </div>
   </div>
 </template>
@@ -41,17 +42,22 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class Details extends Vue {
   private phone: string = '';
   private password: string = '';
+  private codeClickFlag: boolean = false;
+  private codeText: string = '获取验证码';
 
-  public register (){
+  public register() {
     this.$router.push({
-      path :'/registerStpe1'
+      path: '/registerStpe1'
     })
   }
-  public massageLogin (){
+  public massageLogin() {
 
   }
-  public login (){
+  public login() {
 
+  }
+  public codeClick() {
+    
   }
 
 }
@@ -109,18 +115,18 @@ export default class Details extends Vue {
           text-align: center;
           color: #fff;
           font-size: 18px;
-          background:#FE605D;
+          background: #fe605d;
         }
       }
     }
   }
-  .tool{
+  .tool {
     padding: 35px 25px;
     height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    span{
+    span {
       color: #fe605d;
       font-size: 14px;
     }
