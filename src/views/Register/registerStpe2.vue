@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="register">
     <div class="login-bg">
       <img src="../../assets/image/Login/bg.png" alt />
     </div>
@@ -18,13 +18,13 @@
           <van-field v-model="password" type="password" placeholder="请输入密码" />
         </div>
         <div class="button-box">
-          <div class="button">登录</div>
+          <div class="button">注册</div>
         </div>
       </div>
     </div>
     <div class="tool">
-      <span>立即注册</span>
-      <span>短信登录</span>
+     <p>注册即同意<span>《用户服务协议》</span></p>
+      <p></p>
     </div>
   </div>
 </template>
@@ -46,7 +46,7 @@ export default class Details extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.login {
+.register {
   position: relative;
   background: #fff;
   height: -webkit-fill-available;

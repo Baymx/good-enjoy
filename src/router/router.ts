@@ -21,5 +21,20 @@ export default new Router({
       name: 'details',
       component: () => import(/* webpackChunkName: "details" */ '../views/Details/details.vue'),
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "login" */ '../views/Login/accountLogin.vue'),
+    },
+    {
+      path: '/registerStpe1',
+      name: 'registerStpe1',
+      component: () => import(/* webpackChunkName: "registerStpe1" */ '../views/Register/registerStpe1.vue'),
+    },
+    {
+      path: '/registerStpe2',
+      name: 'registerStpe2',
+      component: () => import(/* webpackChunkName: "registerStpe2" */ '../views/Register/registerStpe2.vue'),
+    },
   ],
 });
